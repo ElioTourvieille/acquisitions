@@ -5,3 +5,22 @@ node_modules/
 logs/
 *.log
 .DS_Store
+
+# Neon Local metadata
+.neon_local/
+
+# Docker volumes and temporary files
+tmp/
+temp/
+
+# IDE files
+.vscode/
+.idea/
+
+# Coverage and testing
+coverage/
+.nyc_output/
+
+# Cache files
+.eslintcache
+.prettiercache
