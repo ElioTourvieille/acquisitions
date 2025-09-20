@@ -24,6 +24,7 @@ A Node.js Express application with Neon Database integration, dockerized for bot
 ### Development Environment (with Neon Local)
 
 1. **Clone and setup**
+
    ```bash
    git clone <your-repo-url>
    cd acquisitions
@@ -31,23 +32,26 @@ A Node.js Express application with Neon Database integration, dockerized for bot
 
 2. **Configure environment variables**
    Copy the development environment template:
+
    ```bash
    cp .env.development .env
    ```
-   
+
    Edit `.env` with your Neon credentials:
+
    ```env
    # Get these from your Neon Console
    NEON_API_KEY=your_neon_api_key_here
    NEON_PROJECT_ID=your_neon_project_id_here
    PARENT_BRANCH_ID=your_parent_branch_id_here
-   
+
    # Other configurations
    ARCJET_KEY=your_arcjet_key_here
    JWT_SECRET=your_dev_jwt_secret_here
    ```
 
 3. **Start development environment**
+
    ```bash
    docker-compose -f docker-compose.dev.yml up --build
    ```
@@ -61,21 +65,24 @@ A Node.js Express application with Neon Database integration, dockerized for bot
 
 1. **Configure production environment**
    Copy the production environment template:
+
    ```bash
    cp .env.production .env
    ```
-   
+
    Edit `.env` with your production credentials:
+
    ```env
    # Your Neon Cloud database URL
    DATABASE_URL=postgres://user:password@ep-xxx-xxx.us-east-1.aws.neon.tech/neondb?sslmode=require
-   
+
    # Production configurations
    ARCJET_KEY=your_production_arcjet_key
    JWT_SECRET=your_production_jwt_secret
    ```
 
 2. **Deploy production**
+
    ```bash
    docker-compose -f docker-compose.prod.yml up --build -d
    ```
@@ -87,6 +94,7 @@ A Node.js Express application with Neon Database integration, dockerized for bot
 ## 📚 Environment Configuration
 
 ### Development (.env.development)
+
 - Uses **Neon Local** proxy for database connections
 - Ephemeral database branches (created on start, deleted on stop)
 - Debug logging enabled
@@ -94,6 +102,7 @@ A Node.js Express application with Neon Database integration, dockerized for bot
 - Hot reloading with volume mounts
 
 ### Production (.env.production)
+
 - Uses **Neon Cloud** database directly
 - Production-grade security settings
 - Resource limits and health checks
@@ -103,13 +112,16 @@ A Node.js Express application with Neon Database integration, dockerized for bot
 ## 🗄️ Database Management
 
 ### Development Database
+
 The development environment uses Neon Local, which:
+
 - Creates ephemeral branches automatically
 - Provides fresh database state on each startup
 - Supports both Postgres and Neon serverless drivers
 - Handles SSL certificates automatically
 
 ### Running Migrations
+
 ```bash
 # Development
 docker-compose -f docker-compose.dev.yml exec app npm run db:migrate
@@ -119,6 +131,7 @@ docker-compose -f docker-compose.prod.yml exec app npm run db:migrate
 ```
 
 ### Database Studio (Development)
+
 ```bash
 docker-compose -f docker-compose.dev.yml exec app npm run db:studio
 ```
@@ -126,6 +139,7 @@ docker-compose -f docker-compose.dev.yml exec app npm run db:studio
 ## 🔍 Monitoring and Debugging
 
 ### View Logs
+
 ```bash
 # Development
 docker-compose -f docker-compose.dev.yml logs -f
@@ -135,12 +149,15 @@ docker-compose -f docker-compose.prod.yml logs -f app
 ```
 
 ### Health Checks
+
 Both environments include health checks:
+
 - Application health: GET `/health`
 - Docker health checks run every 30 seconds
 - Database connectivity verification
 
 ### Container Status
+
 ```bash
 # Check container status
 docker-compose -f docker-compose.dev.yml ps
@@ -166,6 +183,7 @@ npm run format:check  # Check formatting
 ## 🔧 Docker Commands Reference
 
 ### Development
+
 ```bash
 # Start development environment
 docker-compose -f docker-compose.dev.yml up --build
@@ -181,6 +199,7 @@ docker-compose -f docker-compose.dev.yml build --no-cache
 ```
 
 ### Production
+
 ```bash
 # Start production environment
 docker-compose -f docker-compose.prod.yml up --build -d
@@ -234,6 +253,7 @@ Neon Local automatically manages database branches:
 - **Branch persistence**: Configure with `DELETE_BRANCH=false`
 
 ### Git Branch Integration
+
 ```yaml
 # In docker-compose.dev.yml
 volumes:
@@ -246,10 +266,11 @@ volumes:
 ### Common Issues
 
 1. **Neon Local connection failed**
+
    ```bash
    # Check if Neon Local container is healthy
    docker-compose -f docker-compose.dev.yml ps
-   
+
    # Check Neon Local logs
    docker-compose -f docker-compose.dev.yml logs neon-local
    ```
@@ -259,6 +280,7 @@ volumes:
    - Production: Ensure proper SSL configuration in Neon Cloud
 
 3. **Environment variables not loaded**
+
    ```bash
    # Verify environment file
    docker-compose -f docker-compose.dev.yml config
@@ -281,6 +303,7 @@ volumes:
 ## 🚢 Deployment
 
 ### Container Registry
+
 ```bash
 # Build and tag for registry
 docker build -t your-registry/acquisitions:latest .
@@ -290,6 +313,7 @@ docker push your-registry/acquisitions:latest
 ```
 
 ### Environment-specific Deployments
+
 - Use appropriate environment files
 - Set proper resource limits
 - Configure health checks
