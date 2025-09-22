@@ -45,23 +45,23 @@ jobs:
         if: always()
         run: |
           echo "## Test Results 🧪" >> $GITHUB_STEP_SUMMARY
-          
+
           if [ "${{ steps.tests.outcome }}" == "success" ]; then
             echo "✅ **All tests passed successfully!**" >> $GITHUB_STEP_SUMMARY
           else
             echo "❌ **Some tests failed. Please review the logs above.**" >> $GITHUB_STEP_SUMMARY
           fi
-          
+
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Coverage Report" >> $GITHUB_STEP_SUMMARY
-          
+
           if [ -f "coverage/lcov-report/index.html" ]; then
             echo "📊 Coverage reports have been generated and uploaded as artifacts." >> $GITHUB_STEP_SUMMARY
             echo "Download the artifacts to view detailed coverage information." >> $GITHUB_STEP_SUMMARY
           else
             echo "⚠️ No coverage report found." >> $GITHUB_STEP_SUMMARY
           fi
-          
+
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Artifacts:** Coverage reports are available for 30 days." >> $GITHUB_STEP_SUMMARY
 
